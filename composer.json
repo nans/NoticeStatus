@@ -1,0 +1,26 @@
+{
+  "name": "nans/notice_status",
+  "description": "Magento 2 - Notification status",
+  "require": {
+    "php": "~5.6|~7.0.0"
+  },
+  "license": [
+    "OSL-3.0"
+  ],
+  "type": "magento2-module",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "NAnS",
+      "homepage": "http://propractice.ru/"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Nans\\NoticeStatus\\": ""
+    }
+  }
+}
