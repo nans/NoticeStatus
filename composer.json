@@ -8,11 +8,10 @@
     "OSL-3.0"
   ],
   "type": "magento2-module",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "authors": [
     {
-      "name": "NAnS",
-      "homepage": "http://propractice.ru/"
+      "name": "NAnS"
     }
   ],
   "autoload": {
