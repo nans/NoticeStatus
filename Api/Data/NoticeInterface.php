@@ -73,44 +73,4 @@ interface NoticeInterface
      * @param int
      */
     public function setCount($count);
-
-    /**
-     * @return string
-     */
-    public static function getColumnId();
-
-    /**
-     * @return string
-     */
-    public static function getColumnType();
-
-    /**
-     * @return string
-     */
-    public static function getColumnRecordId();
-
-    /**
-     * @return string
-     */
-    public static function getColumnRecordType();
-
-    /**
-     * @return string
-     */
-    public static function getColumnSent();
-
-    /**
-     * @return string
-     */
-    public static function getColumnCount();
-
-    /**
-     * @return string
-     */
-    public static function getColumnCreationTime();
-
-    /**
-     * @return string
-     */
-    public static function getColumnUpdateTime();
 }

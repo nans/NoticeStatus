@@ -134,7 +134,6 @@ class NoticeRepository implements NoticeRepositoryInterface
             throw new NoSuchEntityException(__('Data does not exist'));
         }
         $model = $this->_factory->create(['data' => $data]);
-        //$model->setData($data);
         return $model;
     }
 }

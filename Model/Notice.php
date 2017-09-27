@@ -10,7 +10,17 @@ class Notice extends AbstractModel implements NoticeInterface
 {
     const EMAIL_TYPE = 0;
     const SMS_TYPE = 1;
-    const MOBILE_TYPE = 2;//todo add api
+    const MOBILE_TYPE = 2;
+
+    const ID = 'notice_id';
+    const TYPE = 'type';
+    const RECORD_ID = 'record_id';
+    const RECORD_TYPE = 'record_type';
+    const SENT = 'sent';
+    const COUNT = 'count';
+    const CREATION_TIME = 'creation_time';
+    const UPDATE_TIME = 'update_time';
+
 
     /**
      * @return void
@@ -25,7 +35,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function getType()
     {
-        return $this->getData(self::getColumnType());
+        return $this->getData(self::TYPE);
     }
 
     /**
@@ -33,7 +43,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function getRecordId()
     {
-        return $this->getData(self::getColumnRecordId());
+        return $this->getData(self::RECORD_ID);
     }
 
     /**
@@ -41,7 +51,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function getRecordType()
     {
-        return $this->getData(self::getColumnRecordType());
+        return $this->getData(self::RECORD_TYPE);
     }
 
     /**
@@ -49,7 +59,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function getSent()
     {
-        return $this->getData(self::getColumnSent());
+        return $this->getData(self::SENT);
     }
 
     /**
@@ -57,7 +67,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function getCount()
     {
-        return $this->getData(self::getColumnCount());
+        return $this->getData(self::COUNT);
     }
 
     /**
@@ -65,7 +75,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function getCreationTime()
     {
-        return $this->getData(self::getColumnCreationTime());
+        return $this->getData(self::CREATION_TIME);
     }
 
     /**
@@ -73,7 +83,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function getUpdateTime()
     {
-        return $this->getData(self::getColumnUpdateTime());
+        return $this->getData(self::UPDATE_TIME);
     }
 
     /**
@@ -81,7 +91,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setType($type)
     {
-        $this->setData(self::getColumnType(), $type);
+        $this->setData(self::TYPE, $type);
     }
 
     /**
@@ -89,7 +99,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setRecordId($recordId)
     {
-        $this->setData(self::getColumnRecordId(), $recordId);
+        $this->setData(self::RECORD_ID, $recordId);
     }
 
     /**
@@ -97,7 +107,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setRecordType($recordType)
     {
-        $this->setData(self::getColumnRecordType(), $recordType);
+        $this->setData(self::RECORD_TYPE, $recordType);
     }
 
     /**
@@ -105,7 +115,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setSent($sent)
     {
-        $this->setData(self::getColumnSent(), $sent);
+        $this->setData(self::SENT, $sent);
     }
 
     /**
@@ -113,70 +123,6 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setCount($count)
     {
-        $this->setData(self::getColumnCount(), $count);
-    }
-
-    /**
-     * @return string
-     */
-    public static function getColumnId()
-    {
-        return 'notice_id';
-    }
-
-    /**
-     * @return string
-     */
-    public static function getColumnType()
-    {
-        return 'type';
-    }
-
-    /**
-     * @return string
-     */
-    public static function getColumnRecordId()
-    {
-        return 'record_id';
-    }
-
-    /**
-     * @return string
-     */
-    public static function getColumnRecordType()
-    {
-        return 'record_type';
-    }
-
-    /**
-     * @return string
-     */
-    public static function getColumnSent()
-    {
-        return 'sent';
-    }
-
-    /**
-     * @return string
-     */
-    public static function getColumnCount()
-    {
-        return 'count';
-    }
-
-    /**
-     * @return string
-     */
-    public static function getColumnCreationTime()
-    {
-        return 'creation_time';
-    }
-
-    /**
-     * @return string
-     */
-    public static function getColumnUpdateTime()
-    {
-        return 'update_time';
+        $this->setData(self::COUNT, $count);
     }
 }

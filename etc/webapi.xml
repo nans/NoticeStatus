@@ -1,36 +1,51 @@
 <?xml version="1.0" ?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
-    <route url="/V1/notice/sent/:recordId/record_type/:recordType/type/:type/count/:count" method="GET">
+
+    <route url="/V1/notice/sent/:recordId/record_type/:recordType/type/:type" method="GET">
         <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="isNoticeSent"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
 
-    <route url="/V1/notice/sent_day/:recordId/record_type/:recordType/day/:day/type/:type/count/:count" method="GET">
+    <route url="/V1/notice/sent_day/:recordId/record_type/:recordType/day/:day/type/:type" method="GET">
         <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="isNoticeSentByDay"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
 
-    <route url="/V1/notice/sent_week/:recordId/record_type/:recordType/type/:type/count/:count" method="GET">
+    <route url="/V1/notice/sent_week/:recordId/record_type/:recordType/type/:type" method="GET">
         <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="isNoticeSentWeek"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
 
-    <route url="/V1/notice/sent_month/:recordId/record_type/:recordType/type/:type/count/:count" method="GET">
+    <route url="/V1/notice/sent_month/:recordId/record_type/:recordType/type/:type" method="GET">
         <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="isNoticeSentMonth"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
 
-    <route url="/V1/notice/sent_year/:recordId/record_type/:recordType/type/:type/count/:count" method="GET">
+    <route url="/V1/notice/sent_year/:recordId/record_type/:recordType/type/:type" method="GET">
         <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="isNoticeSentYear"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/notice/sent_limit/:recordId/record_type/:recordType/type/:type/count/:count" method="GET">
+        <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="isNoticeSentLimited"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/notice/id/:recordId/record_type/:recordType/type/:type" method="GET">
+        <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="getNoticeByParams"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
