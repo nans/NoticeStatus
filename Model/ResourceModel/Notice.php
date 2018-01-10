@@ -7,6 +7,8 @@ use Nans\NoticeStatus\Model\Notice as Model;
 
 class Notice extends AbstractDb
 {
+    const MAIN_TABLE = 'nans_notice_status';
+
     /**
      * Initialize resource model
      *
@@ -14,7 +16,7 @@ class Notice extends AbstractDb
      */
     protected function _construct()
     {
-        $this->_init($this->getTableName(), Model::getColumnId());
+        $this->_init(self::MAIN_TABLE, Model::ID);
     }
 
     /**
@@ -27,18 +29,10 @@ class Notice extends AbstractDb
     {
         $select = $this->getConnection()
             ->select()
-            ->from(['main_table' => $this->getConnection()->getTableName($this->getMainTable())])
-            ->where(Model::getColumnRecordId() . ' = ?', $recordId)
-            ->where(Model::getColumnRecordType() . ' = ?', $recordType)
-            ->where(Model::getColumnType() . ' = ?', $type);
+            ->from(['main_table' => $this->getConnection()->getTableName(self::MAIN_TABLE)])
+            ->where(Model::RECORD_ID . ' = ?', $recordId)
+            ->where(Model::RECORD_TYPE . ' = ?', $recordType)
+            ->where(Model::TYPE . ' = ?', $type);
         return $this->getConnection()->fetchRow($select);
-    }
-
-    /**
-     * @return string
-     */
-    public static function getTableName()
-    {
-        return 'nans_notice_status';
     }
 }
