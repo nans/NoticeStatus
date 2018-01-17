@@ -72,7 +72,7 @@ class NoticeRepository implements NoticeRepositoryInterface
     {
         if (!isset($this->_instances[$id])) {
             /** @var NoticeInterface|\Magento\Framework\Model\AbstractModel $object */
-            $object = $this->_factory->create();
+            $object = $this->create();
             $this->_resource->load($object, $id);
             if (!$object->getId()) {
                 throw new NoSuchEntityException(__('Data does not exist'));
@@ -127,13 +127,35 @@ class NoticeRepository implements NoticeRepositoryInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @return NoticeInterface
      */
-    public function getByParams($recordId, $recordType, $type)
+    public function getObjectByParams($recordId, $recordType, $type)
+    {
+        $data = $this->getArrayByParams($recordId, $recordType, $type);
+        $model = $this->create($data);
+        return $model;
+    }
+
+    /**
+     * @param int $recordId
+     * @param string $recordType
+     * @param int $type
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return array
+     */
+    public function getArrayByParams($recordId, $recordType, $type)
     {
         $data = $this->_resource->getByParams($recordId, $recordType, $type);
         if (!$data) {
             throw new NoSuchEntityException(__('Data does not exist'));
         }
-        $model = $this->_factory->create(['data' => $data]);
-        return $model;
+        return $data;
+    }
+
+    /**
+     * @param array $data
+     * @return NoticeInterface
+     */
+    public function create(array $data = [])
+    {
+        return $this->_factory->create(['data' => $data]);
     }
 }

@@ -5,6 +5,7 @@ namespace Nans\NoticeStatus\Model;
 use Magento\Framework\Model\AbstractModel;
 use Nans\NoticeStatus\Api\Data\NoticeInterface;
 use Nans\NoticeStatus\Model\ResourceModel\Notice as ResourceModel;
+use Zend\Code\Reflection\Exception\InvalidArgumentException;
 
 class Notice extends AbstractModel implements NoticeInterface
 {
@@ -35,7 +36,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function getType()
     {
-        return $this->getData(self::TYPE);
+        return (int)$this->getData(self::TYPE);
     }
 
     /**
@@ -43,7 +44,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function getRecordId()
     {
-        return $this->getData(self::RECORD_ID);
+        return (int)$this->getData(self::RECORD_ID);
     }
 
     /**
@@ -59,7 +60,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function getSent()
     {
-        return $this->getData(self::SENT);
+        return (int)$this->getData(self::SENT);
     }
 
     /**
@@ -67,7 +68,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function getCount()
     {
-        return $this->getData(self::COUNT);
+        return (int)$this->getData(self::COUNT);
     }
 
     /**
@@ -91,7 +92,10 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setType($type)
     {
-        $this->setData(self::TYPE, $type);
+        if (strlen($type) > 5 || !is_numeric($type)) {
+            throw new InvalidArgumentException();
+        }
+        $this->setData(self::TYPE, (int)$type);
     }
 
     /**
@@ -99,7 +103,10 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setRecordId($recordId)
     {
-        $this->setData(self::RECORD_ID, $recordId);
+        if (strlen($recordId) > 10 || !is_numeric($recordId)) {
+            throw new InvalidArgumentException();
+        }
+        $this->setData(self::RECORD_ID, (int)$recordId);
     }
 
     /**
@@ -107,6 +114,10 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setRecordType($recordType)
     {
+        if (strlen($recordType) > 255) {
+            throw new InvalidArgumentException();
+        }
+
         $this->setData(self::RECORD_TYPE, $recordType);
     }
 
@@ -115,7 +126,10 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setSent($sent)
     {
-        $this->setData(self::SENT, $sent);
+        if (strlen($sent) > 1 || !is_numeric($sent)) {
+            throw new InvalidArgumentException();
+        }
+        $this->setData(self::SENT, (int)$sent);
     }
 
     /**
@@ -123,6 +137,9 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setCount($count)
     {
-        $this->setData(self::COUNT, $count);
+        if (strlen($count) > 10 || !is_numeric($count)) {
+            throw new InvalidArgumentException();
+        }
+        $this->setData(self::COUNT, (int)$count);
     }
 }

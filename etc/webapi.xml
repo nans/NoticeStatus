@@ -50,6 +50,13 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
+
+    <route url="/V1/notice/add" method="POST">
+        <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="createNotice"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
 </routes>
 
 

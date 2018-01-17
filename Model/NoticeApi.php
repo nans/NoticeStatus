@@ -2,32 +2,34 @@
 
 namespace Nans\NoticeStatus\Model;
 
+use Exception;
 use Nans\NoticeStatus\Api\Data\NoticeInterface;
 use Nans\NoticeStatus\Api\NoticeApiInterface;
 use Nans\NoticeStatus\Api\NoticeRepositoryInterface;
+use Magento\Framework\App\Request\Http;
 
 class NoticeApi implements NoticeApiInterface
 {
+    /**
+     * @var Http
+     */
+    protected $_request;
+
     /**
      * @var NoticeRepositoryInterface
      */
     protected $_notificationRepository;
 
     /**
-     * @var NoticeFactory
-     */
-    protected $_notificationFactory;
-
-    /**
+     * @param Http $request
      * @param NoticeRepositoryInterface $notificationRepository
-     * @param NoticeFactory $notificationFactory
      */
     public function __construct(
-        NoticeRepositoryInterface $notificationRepository,
-        NoticeFactory $notificationFactory
+        Http $request,
+        NoticeRepositoryInterface $notificationRepository
     ) {
+        $this->_request = $request;
         $this->_notificationRepository = $notificationRepository;
-        $this->_notificationFactory = $notificationFactory;
     }
 
     /**
@@ -101,14 +103,19 @@ class NoticeApi implements NoticeApiInterface
     }
 
     /**
+     * @url /rest/V1/notice/id/1/record_type/typee/type/1
      * @param int $recordId
      * @param string $recordType
      * @param int $type
-     * @return string
+     * @return array
      */
     public function getNoticeByParams($recordId, $recordType, $type)
     {
-        return $this->_getNoticeByParams($recordId, $recordType, $type);
+        try {
+            return $this->_notificationRepository->getArrayByParams($recordId, $recordType, $type);
+        } catch (Exception $exception) {
+            return [];
+        }
     }
 
     /**
@@ -126,6 +133,42 @@ class NoticeApi implements NoticeApiInterface
     }
 
     /**
+     * /rest/V1/notice/add
+     * @return boolean
+     */
+    public function createNotice()
+    {
+        $recordId = $this->getParamFromRequest(Notice::RECORD_ID);
+        $recordType = $this->getParamFromRequest(Notice::RECORD_TYPE);
+        $type = $this->getParamFromRequest(Notice::TYPE);
+        $sent = $this->getParamFromRequest(Notice::SENT);
+        $count = $this->getParamFromRequest(Notice::COUNT);
+
+        if ((!$recordId && $recordId)
+            || !$recordType
+            || (!$type && $type != 0)
+            || (!$sent && $sent != 0)
+            || (!$count && $count != 0)
+        ) {
+            return false;
+        }
+
+        try {
+            /** @var Notice $notice */
+            $notice = $this->_notificationRepository->create();
+            $notice->setRecordId($recordId);
+            $notice->setRecordType($recordType);
+            $notice->setType($type);
+            $notice->setSent($sent);
+            $notice->setCount($count);
+            $this->_notificationRepository->save($notice);
+        } catch (Exception $exception) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * @param int $recordId
      * @param string $recordType
      * @param int $type
@@ -134,8 +177,8 @@ class NoticeApi implements NoticeApiInterface
     protected function _getNoticeByParams($recordId, $recordType, $type = Notice::EMAIL_TYPE)
     {
         try {
-            return $this->_notificationRepository->getByParams($recordId, $recordType, $type);
-        } catch (\Exception $exception) {
+            return $this->_notificationRepository->getObjectByParams($recordId, $recordType, $type);
+        } catch (Exception $exception) {
             return null;
         }
     }
@@ -166,5 +209,14 @@ class NoticeApi implements NoticeApiInterface
     private function _getTimeInDays($days = 1)
     {
         return 24 * 60 * 60 * $days;
+    }
+
+    /**
+     * @param string
+     * @return string
+     */
+    private function getParamFromRequest($paramName)
+    {
+        return trim($this->_request->getParam($paramName));
     }
 }

@@ -7,6 +7,12 @@ use Nans\NoticeStatus\Api\Data\NoticeInterface;
 interface NoticeRepositoryInterface
 {
     /**
+     * @param array $data
+     * @return NoticeInterface
+     */
+    public function create(array $data = []);
+
+    /**
      * Save record.
      *
      * @param NoticeInterface $object
@@ -50,5 +56,14 @@ interface NoticeRepositoryInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @return NoticeInterface
      */
-    public function getByParams($recordId, $recordType, $type);
+    public function getObjectByParams($recordId, $recordType, $type);
+
+    /**
+     * @param int $recordId
+     * @param string $recordType
+     * @param int $type
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return array
+     */
+    public function getArrayByParams($recordId, $recordType, $type);
 }

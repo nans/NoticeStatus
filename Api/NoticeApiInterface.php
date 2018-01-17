@@ -8,7 +8,7 @@ interface NoticeApiInterface
      * @param int $recordId
      * @param string $recordType
      * @param int $type
-     * @return string
+     * @return array
      */
     public function getNoticeByParams($recordId, $recordType, $type);
 
@@ -61,4 +61,9 @@ interface NoticeApiInterface
      * @return boolean
      */
     public function isNoticeSentYear($recordId, $recordType, $type);
+
+    /**
+     * @return boolean
+     */
+    public function createNotice();
 }

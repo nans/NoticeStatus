@@ -62,7 +62,7 @@ class InstallSchema implements InstallSchemaInterface
                 ->addColumn(
                     'record_id',
                     Table::TYPE_INTEGER,
-                    255,
+                    null,
                     [
                         'nullable' => false,
                         'unsigned' => true
@@ -78,7 +78,7 @@ class InstallSchema implements InstallSchemaInterface
                 )
                 ->addColumn(
                     'sent',
-                    Table::TYPE_SMALLINT,
+                    Table::TYPE_BOOLEAN,
                     null,
                     [
                         'nullable' => false,

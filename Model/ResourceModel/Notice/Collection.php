@@ -9,6 +9,11 @@ use Nans\NoticeStatus\Model\ResourceModel\Notice as ResourceModel;
 class Collection extends AbstractCollection
 {
     /**
+     * @var string
+     */
+    protected $_idFieldName = Model::ID;
+
+    /**
      * Define resource model
      *
      * @return void
