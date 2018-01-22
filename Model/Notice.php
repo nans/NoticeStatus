@@ -9,9 +9,9 @@ use Zend\Code\Reflection\Exception\InvalidArgumentException;
 
 class Notice extends AbstractModel implements NoticeInterface
 {
-    const EMAIL_TYPE = 0;
-    const SMS_TYPE = 1;
-    const MOBILE_TYPE = 2;
+    const EMAIL_TYPE = 1;
+    const SMS_TYPE = 2;
+    const MOBILE_TYPE = 3;
 
     const ID = 'notice_id';
     const TYPE = 'type';

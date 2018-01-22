@@ -29,7 +29,7 @@ class Notice extends AbstractDb
      */
     public function getByParams($recordId, $recordType, $type)
     {
-        if (!$recordId || $recordType || $type) {
+        if (!$recordId || !$recordType || !$type) {
             throw new NoSuchEntityException();
         }
         $select = $this->getConnection()

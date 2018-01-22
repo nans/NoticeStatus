@@ -77,4 +77,9 @@ interface NoticeApiInterface
      * @return bool
      */
     public function deleteNoticeByParams();
+
+    /**
+     * @return boolean
+     */
+    public function updateNotice();
 }

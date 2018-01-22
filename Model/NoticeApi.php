@@ -3,6 +3,7 @@
 namespace Nans\NoticeStatus\Model;
 
 use Exception;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Nans\NoticeStatus\Api\Data\NoticeInterface;
 use Nans\NoticeStatus\Api\NoticeApiInterface;
 use Nans\NoticeStatus\Api\NoticeRepositoryInterface;
@@ -206,7 +207,7 @@ class NoticeApi implements NoticeApiInterface
      */
     private function _getDaysFromTime($time)
     {
-        return $time/24/60/60;
+        return $time / 24 / 60 / 60;
     }
 
     /**
@@ -250,6 +251,42 @@ class NoticeApi implements NoticeApiInterface
             $this->_notificationRepository->delete($notice);
             return true;
         } catch (Exception $exception) {
+            return false;
+        }
+    }
+
+    /**
+     * @return boolean
+     */
+    public function updateNotice()
+    {
+        $id = $this->_getParamFromRequest(Notice::ID);
+        $recordId = $this->_getParamFromRequest(Notice::RECORD_ID);
+        $recordType = $this->_getParamFromRequest(Notice::RECORD_TYPE);
+        $type = $this->_getParamFromRequest(Notice::TYPE);
+        $sent = $this->_getParamFromRequest(Notice::SENT);
+        $count = $this->_getParamFromRequest(Notice::COUNT);
+
+        /** @var Notice $notice */
+        try {
+            if ($id) {
+                $notice = $this->_notificationRepository->getById($id);
+            } else {
+                if ($recordId && $recordType && ($type || $type == 0)) {
+                    $notice = $this->_notificationRepository->getObjectByParams($recordId, $recordType, $type);
+                }
+            }
+
+            if (!empty($count) || ($count != '' && $count == 0)) {
+                $notice->setCount($count);
+            }
+            if (!empty($sent) || ($sent != '' && $sent == 0)) {
+                $notice->setSent($sent);
+            }
+
+            $this->_notificationRepository->save($notice);
+            return true;
+        } catch (NoSuchEntityException $exception) {
             return false;
         }
     }
