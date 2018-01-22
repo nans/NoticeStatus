@@ -10,7 +10,7 @@
     </route>
 
     <route url="/V1/notice/sent_day/:recordId/record_type/:recordType/day/:day/type/:type" method="GET">
-        <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="isNoticeSentByDay"/>
+        <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="isNoticeSentByDayNumber"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
@@ -51,8 +51,22 @@
         </resources>
     </route>
 
+    <route url="/V1/notice/delete/:id/" method="GET">
+        <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="deleteNotice"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
     <route url="/V1/notice/add" method="POST">
         <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="createNotice"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/notice/delete" method="POST">
+        <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="deleteNoticeByParams"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>

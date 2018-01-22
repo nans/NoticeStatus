@@ -53,10 +53,7 @@ class NoticeRepository implements NoticeRepositoryInterface
         try {
             $this->_resource->save($object);
         } catch (\Exception $exception) {
-            throw new CouldNotSaveException(__(
-                'Could not save the record: %1',
-                $exception->getMessage()
-            ));
+            throw new CouldNotSaveException(__('Could not save the record: %1', $exception->getMessage()));
         }
         return $object;
     }
@@ -75,7 +72,7 @@ class NoticeRepository implements NoticeRepositoryInterface
             $object = $this->create();
             $this->_resource->load($object, $id);
             if (!$object->getId()) {
-                throw new NoSuchEntityException(__('Data does not exist'));
+                throw new NoSuchEntityException();
             }
             $this->_instances[$id] = $object;
         }
@@ -99,9 +96,7 @@ class NoticeRepository implements NoticeRepositoryInterface
         } catch (ValidatorException $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
         } catch (\Exception $e) {
-            throw new StateException(
-                __('Unable to remove %1', $id)
-            );
+            throw new StateException(__('Unable to remove %1', $id));
         }
         unset($this->_instances[$id]);
         return true;
@@ -130,6 +125,9 @@ class NoticeRepository implements NoticeRepositoryInterface
     public function getObjectByParams($recordId, $recordType, $type)
     {
         $data = $this->getArrayByParams($recordId, $recordType, $type);
+        if (!$data) {
+            throw new NoSuchEntityException();
+        }
         $model = $this->create($data);
         return $model;
     }
@@ -145,7 +143,7 @@ class NoticeRepository implements NoticeRepositoryInterface
     {
         $data = $this->_resource->getByParams($recordId, $recordType, $type);
         if (!$data) {
-            throw new NoSuchEntityException(__('Data does not exist'));
+            throw new NoSuchEntityException();
         }
         return $data;
     }

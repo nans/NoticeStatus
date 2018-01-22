@@ -2,6 +2,7 @@
 
 namespace Nans\NoticeStatus\Model\ResourceModel;
 
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Nans\NoticeStatus\Model\Notice as Model;
 
@@ -24,9 +25,13 @@ class Notice extends AbstractDb
      * @param string $recordType
      * @param int $type
      * @return array
+     * @throws NoSuchEntityException
      */
     public function getByParams($recordId, $recordType, $type)
     {
+        if (!$recordId || $recordType || $type) {
+            throw new NoSuchEntityException();
+        }
         $select = $this->getConnection()
             ->select()
             ->from(['main_table' => $this->getConnection()->getTableName(self::MAIN_TABLE)])

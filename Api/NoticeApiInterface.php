@@ -36,7 +36,7 @@ interface NoticeApiInterface
      * @param int $type
      * @return boolean
      */
-    public function isNoticeSentByDay($recordId, $recordType, $day, $type);
+    public function isNoticeSentByDayNumber($recordId, $recordType, $day, $type);
 
     /**
      * @param int $recordId
@@ -66,4 +66,15 @@ interface NoticeApiInterface
      * @return boolean
      */
     public function createNotice();
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteNotice($id);
+
+    /**
+     * @return bool
+     */
+    public function deleteNoticeByParams();
 }

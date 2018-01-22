@@ -22,7 +22,6 @@ class Notice extends AbstractModel implements NoticeInterface
     const CREATION_TIME = 'creation_time';
     const UPDATE_TIME = 'update_time';
 
-
     /**
      * @return void
      */
