@@ -82,4 +82,38 @@ interface NoticeApiInterface
      * @return boolean
      */
     public function updateNotice();
+
+    /**
+     * @param int $recordId
+     * @param string $recordType
+     * @param $type
+     * @param $sent
+     * @param $count
+     */
+    public function updateNoticeByParams($recordId, $recordType, $type, $sent, $count);
+
+    /**
+     * @param int $recordId
+     * @param string $recordType
+     * @param $type
+     * @param $sent
+     * @param $count
+     */
+    public function createNoticeByParams($recordId, $recordType, $type, $sent, $count);
+
+    /**
+     * @param int $id
+     * @param int $sent
+     * @return boolean
+     */
+    public function setNoticeStatusById($id, $sent);
+
+    /**
+     * @param int $recordId
+     * @param string $recordType
+     * @param int string $type
+     * @param int string $sent
+     * @return bool
+     */
+    public function setNoticeStatusByParams($recordId, $recordType, $type, $sent);
 }

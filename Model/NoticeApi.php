@@ -143,18 +143,143 @@ class NoticeApi implements NoticeApiInterface
         }
 
         try {
-            /** @var Notice $notice */
-            $notice = $this->_notificationRepository->create();
-            $notice->setRecordId($recordId);
-            $notice->setRecordType($recordType);
-            $notice->setType($type);
-            $notice->setSent($sent);
-            $notice->setCount($count);
-            $this->_notificationRepository->save($notice);
+            $this->createNoticeByParams($recordId, $recordType, $type, $sent, $count);
         } catch (Exception $exception) {
             return false;
         }
         return true;
+    }
+
+    /**
+     * @param int $recordId
+     * @param string $recordType
+     * @param $type
+     * @param $sent
+     * @param $count
+     */
+    public function createNoticeByParams($recordId, $recordType, $type, $sent, $count)
+    {
+        /** @var Notice $notice */
+        $notice = $this->_notificationRepository->create();
+        $notice->setRecordId($recordId);
+        $notice->setRecordType($recordType);
+        $notice->setType($type);
+        $notice->setSent($sent);
+        $notice->setCount($count);
+        $this->_notificationRepository->save($notice);
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteNotice($id)
+    {
+        try {
+            $this->_notificationRepository->deleteById($id);
+            return true;
+        } catch (Exception $exception) {
+            return false;
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function deleteNoticeByParams()
+    {
+        $recordId = $this->_getParamFromRequest(Notice::RECORD_ID);
+        $recordType = $this->_getParamFromRequest(Notice::RECORD_TYPE);
+        $type = $this->_getParamFromRequest(Notice::TYPE);
+
+        if ((!$recordId && $recordId) || !$recordType || (!$type && $type != 0)) {
+            return false;
+        }
+
+        try {
+            $notice = $this->_notificationRepository->getObjectByParams($recordId, $recordType, $type);
+            $this->_notificationRepository->delete($notice);
+            return true;
+        } catch (Exception $exception) {
+            return false;
+        }
+    }
+
+    /**
+     * @return boolean
+     */
+    public function updateNotice()
+    {
+        $recordId = $this->_getParamFromRequest(Notice::RECORD_ID);
+        $recordType = $this->_getParamFromRequest(Notice::RECORD_TYPE);
+        $type = $this->_getParamFromRequest(Notice::TYPE);
+        $sent = $this->_getParamFromRequest(Notice::SENT);
+        $count = $this->_getParamFromRequest(Notice::COUNT);
+
+        /** @var Notice $notice */
+        try {
+            $this->updateNoticeByParams($recordId, $recordType, $type, $sent, $count);
+            return true;
+        } catch (NoSuchEntityException $exception) {
+            return false;
+        }
+    }
+
+    /**
+     * @param int $recordId
+     * @param string $recordType
+     * @param $type
+     * @param $sent
+     * @param $count
+     */
+    public function updateNoticeByParams($recordId, $recordType, $type, $sent, $count)
+    {
+        $notice = $this->_notificationRepository->getObjectByParams($recordId, $recordType, $type);
+        if (!empty($count) || ($count != '' && $count == 0)) {
+            $notice->setCount($count);
+        }
+        if (!empty($sent) || ($sent != '' && $sent == 0)) {
+            $notice->setSent($sent);
+        }
+        $this->_notificationRepository->save($notice);
+    }
+
+    /**
+     * @param int $id
+     * @param int $sent
+     * @return boolean
+     */
+    public function setNoticeStatusById($id, $sent)
+    {
+        try {
+            /** @var Notice $notice */
+            $notice = $this->_notificationRepository->getById($id);
+            $notice->setSent($sent);
+            $this->_notificationRepository->save($notice);
+            return true;
+        } catch (Exception $exception) {
+            return false;
+        }
+    }
+
+    /**
+     * @param int $recordId
+     * @param string $recordType
+     * @param int string $type
+     * @param int string $sent
+     * @return bool
+     */
+    public function setNoticeStatusByParams($recordId, $recordType, $type, $sent)
+    {
+        try {
+            /** @var Notice $notice */
+            $notice = $this->_getNoticeByParams($recordId, $recordType, $type);
+            $notice->setSent($sent);
+            $this->_notificationRepository->save($notice);
+            return true;
+        } catch (Exception $exception) {
+            return false;
+        }
     }
 
     /**
@@ -217,77 +342,5 @@ class NoticeApi implements NoticeApiInterface
     private function _getParamFromRequest($paramName)
     {
         return trim($this->_request->getParam($paramName));
-    }
-
-    /**
-     * @param int $id
-     * @return bool
-     */
-    public function deleteNotice($id)
-    {
-        try {
-            $this->_notificationRepository->deleteById($id);
-            return true;
-        } catch (Exception $exception) {
-            return false;
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    public function deleteNoticeByParams()
-    {
-        $recordId = $this->_getParamFromRequest(Notice::RECORD_ID);
-        $recordType = $this->_getParamFromRequest(Notice::RECORD_TYPE);
-        $type = $this->_getParamFromRequest(Notice::TYPE);
-
-        if ((!$recordId && $recordId) || !$recordType || (!$type && $type != 0)) {
-            return false;
-        }
-
-        try {
-            $notice = $this->_notificationRepository->getObjectByParams($recordId, $recordType, $type);
-            $this->_notificationRepository->delete($notice);
-            return true;
-        } catch (Exception $exception) {
-            return false;
-        }
-    }
-
-    /**
-     * @return boolean
-     */
-    public function updateNotice()
-    {
-        $id = $this->_getParamFromRequest(Notice::ID);
-        $recordId = $this->_getParamFromRequest(Notice::RECORD_ID);
-        $recordType = $this->_getParamFromRequest(Notice::RECORD_TYPE);
-        $type = $this->_getParamFromRequest(Notice::TYPE);
-        $sent = $this->_getParamFromRequest(Notice::SENT);
-        $count = $this->_getParamFromRequest(Notice::COUNT);
-
-        /** @var Notice $notice */
-        try {
-            if ($id) {
-                $notice = $this->_notificationRepository->getById($id);
-            } else {
-                if ($recordId && $recordType && ($type || $type == 0)) {
-                    $notice = $this->_notificationRepository->getObjectByParams($recordId, $recordType, $type);
-                }
-            }
-
-            if (!empty($count) || ($count != '' && $count == 0)) {
-                $notice->setCount($count);
-            }
-            if (!empty($sent) || ($sent != '' && $sent == 0)) {
-                $notice->setSent($sent);
-            }
-
-            $this->_notificationRepository->save($notice);
-            return true;
-        } catch (NoSuchEntityException $exception) {
-            return false;
-        }
     }
 }

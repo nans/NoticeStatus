@@ -58,6 +58,20 @@
         </resources>
     </route>
 
+    <route url="/V1/notice/status/:id/sent/:sent" method="GET">
+        <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="setNoticeStatusById"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/notice/status_by_params/:recordId/record_type/:recordType/type/:type/sent/:sent" method="GET">
+        <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="setNoticeStatusByParams"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
     <route url="/V1/notice/add" method="POST">
         <service class="Nans\NoticeStatus\Api\NoticeApiInterface" method="createNotice"/>
         <resources>
