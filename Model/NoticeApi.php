@@ -102,7 +102,7 @@ class NoticeApi implements NoticeApiInterface
     public function getNoticeByParams($recordId, $recordType, $type)
     {
         try {
-            return $this->_notificationRepository->getArrayByParams($recordId, $recordType, $type);
+            return [$this->_notificationRepository->getArrayByParams($recordId, $recordType, $type)];
         } catch (Exception $exception) {
             return [];
         }
@@ -156,17 +156,23 @@ class NoticeApi implements NoticeApiInterface
      * @param $type
      * @param $sent
      * @param $count
+     * @return bool
      */
     public function createNoticeByParams($recordId, $recordType, $type, $sent, $count)
     {
-        /** @var Notice $notice */
-        $notice = $this->_notificationRepository->create();
-        $notice->setRecordId($recordId);
-        $notice->setRecordType($recordType);
-        $notice->setType($type);
-        $notice->setSent($sent);
-        $notice->setCount($count);
-        $this->_notificationRepository->save($notice);
+        try {
+            /** @var Notice $notice */
+            $notice = $this->_notificationRepository->create();
+            $notice->setRecordId($recordId);
+            $notice->setRecordType($recordType);
+            $notice->setType($type);
+            $notice->setSent($sent);
+            $notice->setCount($count);
+            $this->_notificationRepository->save($notice);
+            return true;
+        } catch (Exception $exception) {
+            return false;
+        }
     }
 
     /**
@@ -231,17 +237,23 @@ class NoticeApi implements NoticeApiInterface
      * @param $type
      * @param $sent
      * @param $count
+     * @return bool
      */
     public function updateNoticeByParams($recordId, $recordType, $type, $sent, $count)
     {
-        $notice = $this->_notificationRepository->getObjectByParams($recordId, $recordType, $type);
-        if (!empty($count) || ($count != '' && $count == 0)) {
-            $notice->setCount($count);
+        try {
+            $notice = $this->_notificationRepository->getObjectByParams($recordId, $recordType, $type);
+            if (!empty($count) || ($count != '' && $count == 0)) {
+                $notice->setCount($count);
+            }
+            if (!empty($sent) || ($sent != '' && $sent == 0)) {
+                $notice->setSent($sent);
+            }
+            $this->_notificationRepository->save($notice);
+            return true;
+        } catch (Exception $exception) {
+            return false;
         }
-        if (!empty($sent) || ($sent != '' && $sent == 0)) {
-            $notice->setSent($sent);
-        }
-        $this->_notificationRepository->save($notice);
     }
 
     /**

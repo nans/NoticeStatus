@@ -89,6 +89,7 @@ interface NoticeApiInterface
      * @param $type
      * @param $sent
      * @param $count
+     * @return boolean
      */
     public function updateNoticeByParams($recordId, $recordType, $type, $sent, $count);
 
@@ -98,6 +99,7 @@ interface NoticeApiInterface
      * @param $type
      * @param $sent
      * @param $count
+     * @return boolean
      */
     public function createNoticeByParams($recordId, $recordType, $type, $sent, $count);
 
