@@ -11,7 +11,7 @@ class Collection extends AbstractCollection
     /**
      * @var string
      */
-    protected $_idFieldName = Model::ID;
+    protected $_idFieldName = Model::KEY_ID;
 
     /**
      * Define resource model

@@ -2,13 +2,13 @@
   "name": "nans/notice_status",
   "description": "Magento 2 - Notification status",
   "require": {
-    "php": "~5.6|~7.0.0"
+    "php": ">=5.6"
   },
   "license": [
-    "OSL-3.0"
+    "MIT"
   ],
   "type": "magento2-module",
-  "version": "0.1.5",
+  "version": "0.2",
   "authors": [
     {
       "name": "NAnS"

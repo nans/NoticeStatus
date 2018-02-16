@@ -17,7 +17,7 @@ class Notice extends AbstractDb
      */
     protected function _construct()
     {
-        $this->_init(self::MAIN_TABLE, Model::ID);
+        $this->_init(self::MAIN_TABLE, Model::KEY_ID);
     }
 
     /**
@@ -35,9 +35,9 @@ class Notice extends AbstractDb
         $select = $this->getConnection()
             ->select()
             ->from(['main_table' => $this->getConnection()->getTableName(self::MAIN_TABLE)])
-            ->where(Model::RECORD_ID . ' = ?', $recordId)
-            ->where(Model::RECORD_TYPE . ' = ?', $recordType)
-            ->where(Model::TYPE . ' = ?', $type);
+            ->where(Model::KEY_RECORD_ID . ' = ?', $recordId)
+            ->where(Model::KEY_RECORD_TYPE . ' = ?', $recordType)
+            ->where(Model::KEY_TYPE . ' = ?', $type);
         return $this->getConnection()->fetchRow($select);
     }
 }

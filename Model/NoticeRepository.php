@@ -3,9 +3,11 @@
 namespace Nans\NoticeStatus\Model;
 
 use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\StateException;
 use Magento\Framework\Exception\ValidatorException;
+use Magento\Framework\Model\AbstractModel;
 use Nans\NoticeStatus\Api\Data\NoticeInterface;
 use Nans\NoticeStatus\Api\NoticeRepositoryInterface;
 use Nans\NoticeStatus\Model\ResourceModel\Notice as NoticeResource;
@@ -45,11 +47,11 @@ class NoticeRepository implements NoticeRepositoryInterface
      *
      * @param NoticeInterface $object
      * @return NoticeInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function save(NoticeInterface $object)
     {
-        /** @var NoticeInterface|\Magento\Framework\Model\AbstractModel $object */
+        /** @var NoticeInterface|AbstractModel $object */
         try {
             $this->_resource->save($object);
         } catch (\Exception $exception) {
@@ -63,12 +65,12 @@ class NoticeRepository implements NoticeRepositoryInterface
      *
      * @param int $id
      * @return NoticeInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function getById($id)
     {
         if (!isset($this->_instances[$id])) {
-            /** @var NoticeInterface|\Magento\Framework\Model\AbstractModel $object */
+            /** @var NoticeInterface|AbstractModel $object */
             $object = $this->create();
             $this->_resource->load($object, $id);
             if (!$object->getId()) {
@@ -84,11 +86,11 @@ class NoticeRepository implements NoticeRepositoryInterface
      *
      * @param NoticeInterface $object
      * @return bool true on success
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function delete(NoticeInterface $object)
     {
-        /** @var NoticeInterface|\Magento\Framework\Model\AbstractModel $object */
+        /** @var NoticeInterface|AbstractModel $object */
         $id = $object->getId();
         try {
             unset($this->_instances[$id]);
@@ -107,8 +109,8 @@ class NoticeRepository implements NoticeRepositoryInterface
      *
      * @param int $id
      * @return bool true on success
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws NoSuchEntityException
+     * @throws LocalizedException
      */
     public function deleteById($id)
     {
@@ -119,7 +121,7 @@ class NoticeRepository implements NoticeRepositoryInterface
      * @param int $recordId
      * @param string $recordType
      * @param int $type
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      * @return NoticeInterface
      */
     public function getObjectByParams($recordId, $recordType, $type)
@@ -136,7 +138,7 @@ class NoticeRepository implements NoticeRepositoryInterface
      * @param int $recordId
      * @param string $recordType
      * @param int $type
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      * @return array
      */
     public function getArrayByParams($recordId, $recordType, $type)

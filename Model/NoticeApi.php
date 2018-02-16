@@ -4,10 +4,10 @@ namespace Nans\NoticeStatus\Model;
 
 use Exception;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\App\Request\Http;
 use Nans\NoticeStatus\Api\Data\NoticeInterface;
 use Nans\NoticeStatus\Api\NoticeApiInterface;
 use Nans\NoticeStatus\Api\NoticeRepositoryInterface;
-use Magento\Framework\App\Request\Http;
 
 class NoticeApi implements NoticeApiInterface
 {
@@ -39,7 +39,7 @@ class NoticeApi implements NoticeApiInterface
      * @param int $type
      * @return boolean
      */
-    public function isNoticeSent($recordId, $recordType, $type = Notice::EMAIL_TYPE)
+    public function isNoticeSent($recordId, $recordType, $type = Notice::TYPE_EMAIL)
     {
         return $this->_isNoticeSend($this->_getNoticeByParams($recordId, $recordType, $type));
     }
@@ -51,7 +51,7 @@ class NoticeApi implements NoticeApiInterface
      * @param int $type
      * @return boolean
      */
-    public function isNoticeSentByDayNumber($recordId, $recordType, $day = 1, $type = Notice::EMAIL_TYPE)
+    public function isNoticeSentByDayNumber($recordId, $recordType, $day = 1, $type = Notice::TYPE_EMAIL)
     {
         /** @var Notice $notice */
         $notice = $this->_getNoticeByParams($recordId, $recordType, $type);
@@ -64,7 +64,7 @@ class NoticeApi implements NoticeApiInterface
      * @param int $type
      * @return boolean
      */
-    public function isNoticeSentWeek($recordId, $recordType, $type = Notice::EMAIL_TYPE)
+    public function isNoticeSentWeek($recordId, $recordType, $type = Notice::TYPE_EMAIL)
     {
         return $this->isNoticeSentByDayNumber($recordId, $recordType, 7, $type);
     }
@@ -75,7 +75,7 @@ class NoticeApi implements NoticeApiInterface
      * @param int $type
      * @return boolean
      */
-    public function isNoticeSentMonth($recordId, $recordType, $type = Notice::EMAIL_TYPE)
+    public function isNoticeSentMonth($recordId, $recordType, $type = Notice::TYPE_EMAIL)
     {
         $days = date('t', strtotime('-1 month'));
         return $this->isNoticeSentByDayNumber($recordId, $recordType, $days, $type);
@@ -87,7 +87,7 @@ class NoticeApi implements NoticeApiInterface
      * @param int $type
      * @return boolean
      */
-    public function isNoticeSentYear($recordId, $recordType, $type = Notice::EMAIL_TYPE)
+    public function isNoticeSentYear($recordId, $recordType, $type = Notice::TYPE_EMAIL)
     {
         $days = $this->_getDaysFromTime(time() - strtotime('-1 year'));
         return $this->isNoticeSentByDayNumber($recordId, $recordType, $days, $type);
@@ -127,11 +127,11 @@ class NoticeApi implements NoticeApiInterface
      */
     public function createNotice()
     {
-        $recordId = $this->_getParamFromRequest(Notice::RECORD_ID);
-        $recordType = $this->_getParamFromRequest(Notice::RECORD_TYPE);
-        $type = $this->_getParamFromRequest(Notice::TYPE);
-        $sent = $this->_getParamFromRequest(Notice::SENT);
-        $count = $this->_getParamFromRequest(Notice::COUNT);
+        $recordId = $this->_getParamFromRequest(Notice::KEY_RECORD_ID);
+        $recordType = $this->_getParamFromRequest(Notice::KEY_RECORD_TYPE);
+        $type = $this->_getParamFromRequest(Notice::KEY_TYPE);
+        $sent = $this->_getParamFromRequest(Notice::KEY_SENT);
+        $count = $this->_getParamFromRequest(Notice::KEY_COUNT);
 
         if ((!$recordId && $recordId)
             || !$recordType
@@ -194,9 +194,9 @@ class NoticeApi implements NoticeApiInterface
      */
     public function deleteNoticeByParams()
     {
-        $recordId = $this->_getParamFromRequest(Notice::RECORD_ID);
-        $recordType = $this->_getParamFromRequest(Notice::RECORD_TYPE);
-        $type = $this->_getParamFromRequest(Notice::TYPE);
+        $recordId = $this->_getParamFromRequest(Notice::KEY_RECORD_ID);
+        $recordType = $this->_getParamFromRequest(Notice::KEY_RECORD_TYPE);
+        $type = $this->_getParamFromRequest(Notice::KEY_TYPE);
 
         if ((!$recordId && $recordId) || !$recordType || (!$type && $type != 0)) {
             return false;
@@ -216,11 +216,11 @@ class NoticeApi implements NoticeApiInterface
      */
     public function updateNotice()
     {
-        $recordId = $this->_getParamFromRequest(Notice::RECORD_ID);
-        $recordType = $this->_getParamFromRequest(Notice::RECORD_TYPE);
-        $type = $this->_getParamFromRequest(Notice::TYPE);
-        $sent = $this->_getParamFromRequest(Notice::SENT);
-        $count = $this->_getParamFromRequest(Notice::COUNT);
+        $recordId = $this->_getParamFromRequest(Notice::KEY_RECORD_ID);
+        $recordType = $this->_getParamFromRequest(Notice::KEY_RECORD_TYPE);
+        $type = $this->_getParamFromRequest(Notice::KEY_TYPE);
+        $sent = $this->_getParamFromRequest(Notice::KEY_SENT);
+        $count = $this->_getParamFromRequest(Notice::KEY_COUNT);
 
         /** @var Notice $notice */
         try {
@@ -300,7 +300,7 @@ class NoticeApi implements NoticeApiInterface
      * @param int $type
      * @return NoticeInterface|null
      */
-    protected function _getNoticeByParams($recordId, $recordType, $type = Notice::EMAIL_TYPE)
+    protected function _getNoticeByParams($recordId, $recordType, $type = Notice::TYPE_EMAIL)
     {
         try {
             return $this->_notificationRepository->getObjectByParams($recordId, $recordType, $type);
