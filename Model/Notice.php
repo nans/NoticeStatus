@@ -9,19 +9,6 @@ use Nans\NoticeStatus\Model\ResourceModel\Notice as ResourceModel;
 
 class Notice extends AbstractModel implements NoticeInterface
 {
-    const TYPE_EMAIL = 1;
-    const TYPE_SMS = 2;
-    const TYPE_MOBILE = 3;
-
-    const KEY_ID = 'notice_id';
-    const KEY_TYPE = 'type';
-    const KEY_RECORD_ID = 'record_id';
-    const KEY_RECORD_TYPE = 'record_type';
-    const KEY_SENT = 'sent';
-    const KEY_COUNT = 'count';
-    const KEY_CREATION_TIME = 'creation_time';
-    const KEY_UPDATE_TIME = 'update_time';
-
     /**
      * @return int
      */
