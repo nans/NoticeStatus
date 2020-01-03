@@ -14,8 +14,8 @@ class InstallSchema implements InstallSchemaInterface
      *
      * @param SchemaSetupInterface $setup
      * @param ModuleContextInterface $context
-     *
      * @return void
+     * @throws \Zend_Db_Exception
      */
     public function install(
         SchemaSetupInterface $setup,
@@ -28,6 +28,7 @@ class InstallSchema implements InstallSchemaInterface
 
     /**
      * @param SchemaSetupInterface $setup
+     * @throws \Zend_Db_Exception
      */
     private function _createNoticeStatusTable($setup)
     {

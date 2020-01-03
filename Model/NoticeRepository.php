@@ -109,7 +109,6 @@ class NoticeRepository implements NoticeRepositoryInterface
      *
      * @param int $id
      * @return bool true on success
-     * @throws NoSuchEntityException
      * @throws LocalizedException
      */
     public function deleteById($id)

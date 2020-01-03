@@ -3,7 +3,6 @@
 namespace Nans\NoticeStatus\Model;
 
 use Exception;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\App\Request\Http;
 use Nans\NoticeStatus\Api\Data\NoticeInterface;
 use Nans\NoticeStatus\Api\NoticeApiInterface;
@@ -226,7 +225,7 @@ class NoticeApi implements NoticeApiInterface
         try {
             $this->updateNoticeByParams($recordId, $recordType, $type, $sent, $count);
             return true;
-        } catch (NoSuchEntityException $exception) {
+        } catch (Exception $exception) {
             return false;
         }
     }
