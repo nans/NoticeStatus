@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nans\NoticeStatus\Api;
 
 interface NoticeApiInterface
@@ -10,7 +12,7 @@ interface NoticeApiInterface
      * @param int $type
      * @return array
      */
-    public function getNoticeByParams($recordId, $recordType, $type);
+    public function getNoticeByParams(int $recordId, string $recordType, int $type): array;
 
     /**
      * @param int $recordId
@@ -18,7 +20,7 @@ interface NoticeApiInterface
      * @param int $type
      * @return boolean
      */
-    public function isNoticeSent($recordId, $recordType, $type);
+    public function isNoticeSent(int $recordId, string $recordType, int $type): bool;
 
     /**
      * @param int $recordId
@@ -27,7 +29,7 @@ interface NoticeApiInterface
      * @param int $count
      * @return boolean
      */
-    public function isNoticeSentLimited($recordId, $recordType, $type, $count);
+    public function isNoticeSentLimited(int $recordId, string $recordType, int $type, int $count): bool;
 
     /**
      * @param int $recordId
@@ -36,7 +38,7 @@ interface NoticeApiInterface
      * @param int $type
      * @return boolean
      */
-    public function isNoticeSentByDayNumber($recordId, $recordType, $day, $type);
+    public function isNoticeSentByDayNumber(int $recordId, string $recordType, int $day, int $type): bool;
 
     /**
      * @param int $recordId
@@ -44,7 +46,7 @@ interface NoticeApiInterface
      * @param int $type
      * @return boolean
      */
-    public function isNoticeSentWeek($recordId, $recordType, $type);
+    public function isNoticeSentWeek(int $recordId, string $recordType, int $type): bool;
 
     /**
      * @param int $recordId
@@ -52,7 +54,7 @@ interface NoticeApiInterface
      * @param int $type
      * @return boolean
      */
-    public function isNoticeSentMonth($recordId, $recordType, $type);
+    public function isNoticeSentMonth(int $recordId, string $recordType, int $type): bool;
 
     /**
      * @param int $recordId
@@ -60,62 +62,62 @@ interface NoticeApiInterface
      * @param int $type
      * @return boolean
      */
-    public function isNoticeSentYear($recordId, $recordType, $type);
+    public function isNoticeSentYear(int $recordId, string $recordType, int $type): bool;
 
     /**
      * @return boolean
      */
-    public function createNotice();
+    public function createNotice(): bool;
 
     /**
      * @param int $id
      * @return bool
      */
-    public function deleteNotice($id);
+    public function deleteNotice(int $id): bool;
 
     /**
      * @return bool
      */
-    public function deleteNoticeByParams();
+    public function deleteNoticeByParams(): bool;
 
     /**
      * @return boolean
      */
-    public function updateNotice();
-
-    /**
-     * @param int $recordId
-     * @param string $recordType
-     * @param $type
-     * @param $sent
-     * @param $count
-     * @return boolean
-     */
-    public function updateNoticeByParams($recordId, $recordType, $type, $sent, $count);
+    public function updateNotice(): bool;
 
     /**
      * @param int $recordId
      * @param string $recordType
-     * @param $type
-     * @param $sent
-     * @param $count
+     * @param int $type
+     * @param int $sent
+     * @param int $count
      * @return boolean
      */
-    public function createNoticeByParams($recordId, $recordType, $type, $sent, $count);
+    public function updateNoticeByParams(int $recordId, string $recordType, int $type, int $sent, int $count): bool;
+
+    /**
+     * @param int $recordId
+     * @param string $recordType
+     * @param int $type
+     * @param int $sent
+     * @param int $count
+     * @return boolean
+     */
+    public function createNoticeByParams(int $recordId, string $recordType, int $type, int $sent, int $count): bool;
 
     /**
      * @param int $id
      * @param int $sent
      * @return boolean
      */
-    public function setNoticeStatusById($id, $sent);
+    public function setNoticeStatusById(int $id, int $sent): bool;
 
     /**
      * @param int $recordId
      * @param string $recordType
-     * @param int string $type
-     * @param int string $sent
+     * @param int $type
+     * @param int $sent
      * @return bool
      */
-    public function setNoticeStatusByParams($recordId, $recordType, $type, $sent);
+    public function setNoticeStatusByParams(int $recordId, string $recordType, int $type, int $sent): bool;
 }

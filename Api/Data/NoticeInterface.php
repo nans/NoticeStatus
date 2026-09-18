@@ -1,89 +1,86 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nans\NoticeStatus\Api\Data;
 
 interface NoticeInterface
 {
-    const KEY_ID = 'notice_id';
-    const KEY_TYPE = 'type';
-    const KEY_RECORD_ID = 'record_id';
-    const KEY_RECORD_TYPE = 'record_type';
-    const KEY_SENT = 'sent';
-    const KEY_COUNT = 'count';
-    const KEY_CREATION_TIME = 'creation_time';
-    const KEY_UPDATE_TIME = 'update_time';
+    const string KEY_ID = 'notice_id';
+    const string KEY_TYPE = 'type';
+    const string KEY_RECORD_ID = 'record_id';
+    const string KEY_RECORD_TYPE = 'record_type';
+    const string KEY_SENT = 'sent';
+    const string KEY_COUNT = 'count';
+    const string KEY_CREATION_TIME = 'creation_time';
+    const string KEY_UPDATE_TIME = 'update_time';
 
-    const TYPE_EMAIL = 1;
-    const TYPE_SMS = 2;
-    const TYPE_MOBILE = 3;
-
-    /**
-     * @return int
-     */
-    public function getId();
+    const int TYPE_EMAIL = 1;
+    const int TYPE_SMS = 2;
+    const int TYPE_MOBILE = 3;
 
     /**
      * @return int
      */
-    public function getType();
+    public function getId():int;
 
     /**
      * @return int
      */
-    public function getRecordId();
+    public function getType(): int;
+
+    /**
+     * @return int
+     */
+    public function getRecordId(): int;
 
     /**
      * @return string
      */
-    public function getRecordType();
+    public function getRecordType(): string;
 
     /**
      * @return int
      */
-    public function getSent();
+    public function getSent(): int;
 
     /**
      * @return int
      */
-    public function getCount();
+    public function getCount(): int;
 
     /**
      * @return string
      */
-    public function getCreationTime();
+    public function getCreationTime(): string;
 
     /**
      * @return string
      */
-    public function getUpdateTime();
+    public function getUpdateTime(): string;
 
     /**
-     * @param int
+     * @param int $type
      */
-    public function setId($id);
+    public function setType(int $type): void;
 
     /**
-     * @param int
+     * @param int $recordId
      */
-    public function setType($type);
+    public function setRecordId(int $recordId): void;
 
     /**
-     * @param int
+     * @param string $recordType
      */
-    public function setRecordId($recordId);
+    public function setRecordType(string $recordType): void;
 
     /**
-     * @param string
+     * @param int $sent
      */
-    public function setRecordType($recordType);
+    public function setSent(int $sent): void;
 
     /**
-     * @param int
+     * @param int $count
      */
-    public function setSent($sent);
-
-    /**
-     * @param int
-     */
-    public function setCount($count);
+    public function setCount(int $count): void;
 }

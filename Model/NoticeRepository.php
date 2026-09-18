@@ -17,18 +17,18 @@ class NoticeRepository implements NoticeRepositoryInterface
     /**
      * @var array
      */
-    protected $_instances = [];
+    protected array $_instances = [];
 
     /**
      * @var NoticeResource
      */
-    protected $_resource;
+    protected NoticeResource $_resource;
 
     /**
      * auto generated class
      * @var NoticeFactory
      */
-    protected $_factory;
+    protected NoticeFactory $_factory;
 
     /**
      * @param NoticeResource $resource
@@ -49,7 +49,7 @@ class NoticeRepository implements NoticeRepositoryInterface
      * @return NoticeInterface
      * @throws LocalizedException
      */
-    public function save(NoticeInterface $object)
+    public function save(NoticeInterface $object): NoticeInterface
     {
         /** @var NoticeInterface|AbstractModel $object */
         try {
@@ -67,7 +67,7 @@ class NoticeRepository implements NoticeRepositoryInterface
      * @return NoticeInterface
      * @throws LocalizedException
      */
-    public function getById($id)
+    public function getById(int $id): NoticeInterface
     {
         if (!isset($this->_instances[$id])) {
             /** @var NoticeInterface|AbstractModel $object */
@@ -88,7 +88,7 @@ class NoticeRepository implements NoticeRepositoryInterface
      * @return bool true on success
      * @throws LocalizedException
      */
-    public function delete(NoticeInterface $object)
+    public function delete(NoticeInterface $object): bool
     {
         /** @var NoticeInterface|AbstractModel $object */
         $id = $object->getId();
@@ -111,7 +111,7 @@ class NoticeRepository implements NoticeRepositoryInterface
      * @return bool true on success
      * @throws LocalizedException
      */
-    public function deleteById($id)
+    public function deleteById(int $id): bool
     {
         return $this->delete($this->getById($id));
     }
@@ -120,10 +120,10 @@ class NoticeRepository implements NoticeRepositoryInterface
      * @param int $recordId
      * @param string $recordType
      * @param int $type
-     * @throws NoSuchEntityException
      * @return NoticeInterface
+     *@throws NoSuchEntityException
      */
-    public function getObjectByParams($recordId, $recordType, $type)
+    public function getObjectByParams(int $recordId, string $recordType, int $type): NoticeInterface
     {
         $data = $this->getArrayByParams($recordId, $recordType, $type);
         if (!$data) {
@@ -137,10 +137,10 @@ class NoticeRepository implements NoticeRepositoryInterface
      * @param int $recordId
      * @param string $recordType
      * @param int $type
-     * @throws NoSuchEntityException
      * @return array
+     *@throws NoSuchEntityException
      */
-    public function getArrayByParams($recordId, $recordType, $type)
+    public function getArrayByParams(int $recordId, string $recordType, int $type): array
     {
         $data = $this->_resource->getByParams($recordId, $recordType, $type);
         if (!$data) {
