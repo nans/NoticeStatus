@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nans\NoticeStatus\Model\ResourceModel;
 
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -8,11 +10,9 @@ use Nans\NoticeStatus\Model\Notice as Model;
 
 class Notice extends AbstractDb
 {
-    const MAIN_TABLE = 'nans_notice_status';
+    const string MAIN_TABLE = 'nans_notice_status';
 
     /**
-     * Initialize resource model
-     *
      * @return void
      */
     protected function _construct()
@@ -27,7 +27,7 @@ class Notice extends AbstractDb
      * @return array
      * @throws NoSuchEntityException
      */
-    public function getByParams($recordId, $recordType, $type)
+    public function getByParams(int $recordId, string $recordType, int $type): array
     {
         if (!$recordId || !$recordType || !$type) {
             throw new NoSuchEntityException();
@@ -38,6 +38,10 @@ class Notice extends AbstractDb
             ->where(Model::KEY_RECORD_ID . ' = ?', $recordId)
             ->where(Model::KEY_RECORD_TYPE . ' = ?', $recordType)
             ->where(Model::KEY_TYPE . ' = ?', $type);
-        return $this->getConnection()->fetchRow($select);
+        $result = $this->getConnection()->fetchRow($select);
+        if($result === false){
+            throw new NoSuchEntityException();
+        }
+        return $result;
     }
 }

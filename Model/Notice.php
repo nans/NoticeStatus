@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nans\NoticeStatus\Model;
 
 use Magento\Framework\Exception\LocalizedException;
@@ -71,7 +73,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setType(int $type): void
     {
-        if (strlen($type) > 5 || !is_numeric($type)) {
+        if (!is_numeric($type)) {
             throw new InvalidArgumentException();
         }
         $this->setData(self::KEY_TYPE, (int)$type);
@@ -82,7 +84,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setRecordId(int $recordId): void
     {
-        if (strlen($recordId) > 10 || !is_numeric($recordId)) {
+        if (!is_numeric($recordId)) {
             throw new InvalidArgumentException();
         }
         $this->setData(self::KEY_RECORD_ID, (int)$recordId);
@@ -105,7 +107,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setSent(int $sent): void
     {
-        if (strlen($sent) > 1 || !is_numeric($sent)) {
+        if (!is_numeric($sent)) {
             throw new InvalidArgumentException();
         }
         $this->setData(self::KEY_SENT, (int)$sent);
@@ -116,7 +118,7 @@ class Notice extends AbstractModel implements NoticeInterface
      */
     public function setCount(int $count): void
     {
-        if (strlen($count) > 10 || !is_numeric($count)) {
+        if (!is_numeric($count)) {
             throw new InvalidArgumentException();
         }
         $this->setData(self::KEY_COUNT, (int)$count);
@@ -132,8 +134,6 @@ class Notice extends AbstractModel implements NoticeInterface
     }
 
     /**
-     * Identifier getter
-     *
      * @return int
      */
     public function getId(): int

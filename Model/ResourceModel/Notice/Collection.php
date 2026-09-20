@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nans\NoticeStatus\Model\ResourceModel\Notice;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
@@ -14,8 +16,6 @@ class Collection extends AbstractCollection
     protected $_idFieldName = Model::KEY_ID;
 
     /**
-     * Define resource model
-     *
      * @return void
      */
     protected function _construct()

@@ -14,11 +14,9 @@ interface NoticeRepositoryInterface
      * @param array $data
      * @return NoticeInterface
      */
-    public function create(array $data = []):NoticeInterface;
+    public function create(array $data = []): NoticeInterface;
 
     /**
-     * Save record.
-     *
      * @param NoticeInterface $object
      * @return NoticeInterface
      * @throws LocalizedException
@@ -26,17 +24,13 @@ interface NoticeRepositoryInterface
     public function save(NoticeInterface $object): NoticeInterface;
 
     /**
-     * Retrieve record.
-     *
      * @param int $id
      * @return NoticeInterface
      * @throws LocalizedException
      */
-    public function getById(int $id):NoticeInterface;
+    public function getById(int $id): NoticeInterface;
 
     /**
-     * Delete record.
-     *
      * @param NoticeInterface $object
      * @return bool true on success
      * @throws LocalizedException
@@ -44,8 +38,6 @@ interface NoticeRepositoryInterface
     public function delete(NoticeInterface $object): bool;
 
     /**
-     * Delete record by ID.
-     *
      * @param int $id
      * @return bool true on success
      * @throws NoSuchEntityException
@@ -69,5 +61,5 @@ interface NoticeRepositoryInterface
      * @return array
      * @throws NoSuchEntityException
      */
-    public function getArrayByParams(int $recordId, string $recordType, int $type):array;
+    public function getArrayByParams(int $recordId, string $recordType, int $type): array;
 }
