@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nans\NoticeStatus\Api;
 
 use Nans\NoticeStatus\Api\Data\NoticeInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 interface NoticeRepositoryInterface
 {
@@ -10,60 +14,52 @@ interface NoticeRepositoryInterface
      * @param array $data
      * @return NoticeInterface
      */
-    public function create(array $data = []);
+    public function create(array $data = []): NoticeInterface;
 
     /**
-     * Save record.
-     *
      * @param NoticeInterface $object
      * @return NoticeInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
-    public function save(NoticeInterface $object);
+    public function save(NoticeInterface $object): NoticeInterface;
 
     /**
-     * Retrieve record.
-     *
      * @param int $id
      * @return NoticeInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
-    public function getById($id);
+    public function getById(int $id): NoticeInterface;
 
     /**
-     * Delete record.
-     *
      * @param NoticeInterface $object
      * @return bool true on success
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
-    public function delete(NoticeInterface $object);
+    public function delete(NoticeInterface $object): bool;
 
     /**
-     * Delete record by ID.
-     *
      * @param int $id
      * @return bool true on success
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws NoSuchEntityException
+     * @throws LocalizedException
      */
-    public function deleteById($id);
+    public function deleteById(int $id): bool;
 
     /**
      * @param int $recordId
      * @param string $recordType
      * @param int $type
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @return NoticeInterface
+     * @throws NoSuchEntityException
      */
-    public function getObjectByParams($recordId, $recordType, $type);
+    public function getObjectByParams(int $recordId, string $recordType, int $type): NoticeInterface;
 
     /**
      * @param int $recordId
      * @param string $recordType
      * @param int $type
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @return array
+     * @throws NoSuchEntityException
      */
-    public function getArrayByParams($recordId, $recordType, $type);
+    public function getArrayByParams(int $recordId, string $recordType, int $type): array;
 }

@@ -1,0 +1,17 @@
+{
+    "nans_notice_status": {
+        "column": {
+            "notice_id": true,
+            "type": true,
+            "record_id": true,
+            "sent": true,
+            "count": true,
+            "record_type": true,
+            "creation_time": true,
+            "update_time": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

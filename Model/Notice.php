@@ -1,18 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nans\NoticeStatus\Model;
 
-use Zend\Code\Reflection\Exception\InvalidArgumentException;
-use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Model\AbstractExtensibleModel;
 use Nans\NoticeStatus\Api\Data\NoticeInterface;
 use Nans\NoticeStatus\Model\ResourceModel\Notice as ResourceModel;
+use Symfony\Component\String\Exception\InvalidArgumentException;
 
-class Notice extends AbstractModel implements NoticeInterface
+class Notice extends AbstractExtensibleModel implements NoticeInterface
 {
     /**
      * @return int
      */
-    public function getType()
+    public function getType(): int
     {
         return (int)$this->getData(self::KEY_TYPE);
     }
@@ -20,7 +23,7 @@ class Notice extends AbstractModel implements NoticeInterface
     /**
      * @return int
      */
-    public function getRecordId()
+    public function getRecordId(): int
     {
         return (int)$this->getData(self::KEY_RECORD_ID);
     }
@@ -28,7 +31,7 @@ class Notice extends AbstractModel implements NoticeInterface
     /**
      * @return string
      */
-    public function getRecordType()
+    public function getRecordType(): string
     {
         return $this->getData(self::KEY_RECORD_TYPE);
     }
@@ -36,7 +39,7 @@ class Notice extends AbstractModel implements NoticeInterface
     /**
      * @return int
      */
-    public function getSent()
+    public function getSent(): int
     {
         return (int)$this->getData(self::KEY_SENT);
     }
@@ -44,7 +47,7 @@ class Notice extends AbstractModel implements NoticeInterface
     /**
      * @return int
      */
-    public function getCount()
+    public function getCount(): int
     {
         return (int)$this->getData(self::KEY_COUNT);
     }
@@ -52,7 +55,7 @@ class Notice extends AbstractModel implements NoticeInterface
     /**
      * @return string
      */
-    public function getCreationTime()
+    public function getCreationTime(): string
     {
         return $this->getData(self::KEY_CREATION_TIME);
     }
@@ -60,37 +63,37 @@ class Notice extends AbstractModel implements NoticeInterface
     /**
      * @return string
      */
-    public function getUpdateTime()
+    public function getUpdateTime(): string
     {
         return $this->getData(self::KEY_UPDATE_TIME);
     }
 
     /**
-     * @param int
+     * @param int $type
      */
-    public function setType($type)
+    public function setType(int $type): void
     {
-        if (strlen($type) > 5 || !is_numeric($type)) {
+        if (!is_numeric($type)) {
             throw new InvalidArgumentException();
         }
         $this->setData(self::KEY_TYPE, (int)$type);
     }
 
     /**
-     * @param int
+     * @param int $recordId
      */
-    public function setRecordId($recordId)
+    public function setRecordId(int $recordId): void
     {
-        if (strlen($recordId) > 10 || !is_numeric($recordId)) {
+        if (!is_numeric($recordId)) {
             throw new InvalidArgumentException();
         }
         $this->setData(self::KEY_RECORD_ID, (int)$recordId);
     }
 
     /**
-     * @param string
+     * @param string $recordType
      */
-    public function setRecordType($recordType)
+    public function setRecordType(string $recordType): void
     {
         if (strlen($recordType) > 255) {
             throw new InvalidArgumentException();
@@ -100,22 +103,22 @@ class Notice extends AbstractModel implements NoticeInterface
     }
 
     /**
-     * @param int
+     * @param int $sent
      */
-    public function setSent($sent)
+    public function setSent(int $sent): void
     {
-        if (strlen($sent) > 1 || !is_numeric($sent)) {
+        if (!is_numeric($sent)) {
             throw new InvalidArgumentException();
         }
         $this->setData(self::KEY_SENT, (int)$sent);
     }
 
     /**
-     * @param int
+     * @param int $count
      */
-    public function setCount($count)
+    public function setCount(int $count): void
     {
-        if (strlen($count) > 10 || !is_numeric($count)) {
+        if (!is_numeric($count)) {
             throw new InvalidArgumentException();
         }
         $this->setData(self::KEY_COUNT, (int)$count);
@@ -123,6 +126,7 @@ class Notice extends AbstractModel implements NoticeInterface
 
     /**
      * @return void
+     * @throws LocalizedException
      */
     protected function _construct()
     {

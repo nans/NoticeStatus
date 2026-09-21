@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nans\NoticeStatus\Model;
 
 use Magento\Framework\Exception\CouldNotSaveException;
@@ -17,18 +19,17 @@ class NoticeRepository implements NoticeRepositoryInterface
     /**
      * @var array
      */
-    protected $_instances = [];
+    protected array $instances = [];
 
     /**
      * @var NoticeResource
      */
-    protected $_resource;
+    protected NoticeResource $resource;
 
     /**
-     * auto generated class
      * @var NoticeFactory
      */
-    protected $_factory;
+    protected NoticeFactory $factory;
 
     /**
      * @param NoticeResource $resource
@@ -38,22 +39,20 @@ class NoticeRepository implements NoticeRepositoryInterface
         NoticeResource $resource,
         NoticeFactory $factory
     ) {
-        $this->_resource = $resource;
-        $this->_factory = $factory;
+        $this->resource = $resource;
+        $this->factory = $factory;
     }
 
     /**
-     * Save data.
-     *
      * @param NoticeInterface $object
      * @return NoticeInterface
      * @throws LocalizedException
      */
-    public function save(NoticeInterface $object)
+    public function save(NoticeInterface $object): NoticeInterface
     {
         /** @var NoticeInterface|AbstractModel $object */
         try {
-            $this->_resource->save($object);
+            $this->resource->save($object);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(__('Could not save the record: %1', $exception->getMessage()));
         }
@@ -61,57 +60,51 @@ class NoticeRepository implements NoticeRepositoryInterface
     }
 
     /**
-     * Retrieve data.
-     *
      * @param int $id
      * @return NoticeInterface
      * @throws LocalizedException
      */
-    public function getById($id)
+    public function getById(int $id): NoticeInterface
     {
-        if (!isset($this->_instances[$id])) {
+        if (!isset($this->instances[$id])) {
             /** @var NoticeInterface|AbstractModel $object */
             $object = $this->create();
-            $this->_resource->load($object, $id);
+            $this->resource->load($object, $id);
             if (!$object->getId()) {
                 throw new NoSuchEntityException();
             }
-            $this->_instances[$id] = $object;
+            $this->instances[$id] = $object;
         }
-        return $this->_instances[$id];
+        return $this->instances[$id];
     }
 
     /**
-     * Delete data.
-     *
      * @param NoticeInterface $object
      * @return bool true on success
      * @throws LocalizedException
      */
-    public function delete(NoticeInterface $object)
+    public function delete(NoticeInterface $object): bool
     {
         /** @var NoticeInterface|AbstractModel $object */
         $id = $object->getId();
         try {
-            unset($this->_instances[$id]);
-            $this->_resource->delete($object);
+            unset($this->instances[$id]);
+            $this->resource->delete($object);
         } catch (ValidatorException $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
         } catch (\Exception $e) {
             throw new StateException(__('Unable to remove %1', $id));
         }
-        unset($this->_instances[$id]);
+        unset($this->instances[$id]);
         return true;
     }
 
     /**
-     * Delete data by ID.
-     *
      * @param int $id
      * @return bool true on success
      * @throws LocalizedException
      */
-    public function deleteById($id)
+    public function deleteById(int $id): bool
     {
         return $this->delete($this->getById($id));
     }
@@ -120,29 +113,28 @@ class NoticeRepository implements NoticeRepositoryInterface
      * @param int $recordId
      * @param string $recordType
      * @param int $type
-     * @throws NoSuchEntityException
      * @return NoticeInterface
+     * @throws NoSuchEntityException
      */
-    public function getObjectByParams($recordId, $recordType, $type)
+    public function getObjectByParams(int $recordId, string $recordType, int $type): NoticeInterface
     {
         $data = $this->getArrayByParams($recordId, $recordType, $type);
         if (!$data) {
             throw new NoSuchEntityException();
         }
-        $model = $this->create($data);
-        return $model;
+        return $this->create($data);
     }
 
     /**
      * @param int $recordId
      * @param string $recordType
      * @param int $type
-     * @throws NoSuchEntityException
      * @return array
+     * @throws NoSuchEntityException
      */
-    public function getArrayByParams($recordId, $recordType, $type)
+    public function getArrayByParams(int $recordId, string $recordType, int $type): array
     {
-        $data = $this->_resource->getByParams($recordId, $recordType, $type);
+        $data = $this->resource->getByParams($recordId, $recordType, $type);
         if (!$data) {
             throw new NoSuchEntityException();
         }
@@ -153,8 +145,8 @@ class NoticeRepository implements NoticeRepositoryInterface
      * @param array $data
      * @return NoticeInterface
      */
-    public function create(array $data = [])
+    public function create(array $data = []): NoticeInterface
     {
-        return $this->_factory->create(['data' => $data]);
+        return $this->factory->create(['data' => $data]);
     }
 }

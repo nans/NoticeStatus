@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nans\NoticeStatus\Api\Data;
 
 interface NoticeInterface
@@ -20,70 +22,60 @@ interface NoticeInterface
     /**
      * @return int
      */
-    public function getId();
+    public function getType(): int;
 
     /**
      * @return int
      */
-    public function getType();
-
-    /**
-     * @return int
-     */
-    public function getRecordId();
+    public function getRecordId(): int;
 
     /**
      * @return string
      */
-    public function getRecordType();
+    public function getRecordType(): string;
 
     /**
      * @return int
      */
-    public function getSent();
+    public function getSent(): int;
 
     /**
      * @return int
      */
-    public function getCount();
+    public function getCount(): int;
 
     /**
      * @return string
      */
-    public function getCreationTime();
+    public function getCreationTime(): string;
 
     /**
      * @return string
      */
-    public function getUpdateTime();
+    public function getUpdateTime(): string;
 
     /**
-     * @param int
+     * @param int $type
      */
-    public function setId($id);
+    public function setType(int $type): void;
 
     /**
-     * @param int
+     * @param int $recordId
      */
-    public function setType($type);
+    public function setRecordId(int $recordId): void;
 
     /**
-     * @param int
+     * @param string $recordType
      */
-    public function setRecordId($recordId);
+    public function setRecordType(string $recordType): void;
 
     /**
-     * @param string
+     * @param int $sent
      */
-    public function setRecordType($recordType);
+    public function setSent(int $sent): void;
 
     /**
-     * @param int
+     * @param int $count
      */
-    public function setSent($sent);
-
-    /**
-     * @param int
-     */
-    public function setCount($count);
+    public function setCount(int $count): void;
 }
