@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Nans\NoticeStatus\Model;
 
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Model\AbstractExtensibleModel;
 use Nans\NoticeStatus\Api\Data\NoticeInterface;
 use Nans\NoticeStatus\Model\ResourceModel\Notice as ResourceModel;
 use Symfony\Component\String\Exception\InvalidArgumentException;
 
-class Notice extends AbstractModel implements NoticeInterface
+class Notice extends AbstractExtensibleModel implements NoticeInterface
 {
     /**
      * @return int
@@ -131,13 +131,5 @@ class Notice extends AbstractModel implements NoticeInterface
     protected function _construct()
     {
         $this->_init(ResourceModel::class);
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return (int)$this->_getData($this->_idFieldName);
     }
 }

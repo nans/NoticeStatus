@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="nans_notice_status" resource="default" engine="innodb" comment="Notice Status">
+        <column xsi:type="int" name="notice_id" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="int" name="type" unsigned="true" nullable="false" identity="false" default="0" comment="Type"/>
+        <column xsi:type="int" name="record_id" unsigned="true" nullable="false" identity="false" comment="Record ID"/>
+        <column xsi:type="int" name="sent" unsigned="true" nullable="false" identity="false" default="0" comment="Sent"/>
+        <column xsi:type="int" name="count" unsigned="true" nullable="false" identity="false" default="0" comment="Count"/>
+        <column xsi:type="varchar" name="record_type" nullable="false" length="255" comment="Record Type"/>
+        <column xsi:type="timestamp" name="creation_time" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="update_time" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="notice_id"/>
+        </constraint>
+    </table>
+</schema>

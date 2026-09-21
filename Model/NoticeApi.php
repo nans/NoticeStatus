@@ -6,6 +6,7 @@ namespace Nans\NoticeStatus\Model;
 
 use Exception;
 use Magento\Framework\App\Request\Http;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Nans\NoticeStatus\Api\Data\NoticeInterface;
 use Nans\NoticeStatus\Api\NoticeApiInterface;
 use Nans\NoticeStatus\Api\NoticeRepositoryInterface;
@@ -100,6 +101,7 @@ class NoticeApi implements NoticeApiInterface
      * @param string $recordType
      * @param int $type
      * @return array
+     * @throws NoSuchEntityException
      */
     public function getNoticeByParams(int $recordId, string $recordType, int $type): array
     {
